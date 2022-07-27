@@ -1,0 +1,16 @@
+html, body {
+  font-family: sans-serif;
+}
+
+h1 > img {
+  height: 50px;
+}
+
+#looper div > div {
+  margin: 5px; 
+}
+
+#looper button {
+  height: 50px;
+  width: 100%; 
+}
