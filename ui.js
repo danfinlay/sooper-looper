@@ -8,12 +8,15 @@ export function renderLayers (layers) {
 
     const div = document.createElement('div');
 
+    const length = layer.buffer.length / layer.buffer.sampleRate;
+    const stringLength = `(${length.toFixed(2)}s)`;
+
     const button = document.createElement('button');
-    button.innerText = `Layer ${index}` + (layer.muted ? ' (muted)' : '');
+    button.innerText = `Layer ${index} ${stringLength}` + (layer.muted ? ' (muted)' : '');
     button.addEventListener('click', () => {
       console.log(`Layer ${index} clicked`);
       layer.toggleMute();
-      button.innerText = `Layer ${index}` + (layer.muted ? ' (muted)' : '');
+      button.innerText = `Layer ${index} ${stringLength}` + (layer.muted ? ' (muted)' : '');
     });
     div.appendChild(button);
 
@@ -48,9 +51,10 @@ export function initUi (context, mic, speaker, mediaStream, layers) {
 
 function stopRecording (recorder, layers, context, speaker) {
   startStop.innerText = 'Start Recording';
-  recorderToAudioBuffer(context, recorder)
+  recorderToAudioBuffer(context, recorder, layers)
   .then((audioBuffer) => {
-    const layer = createLayer(context, speaker, audioBuffer);
+    console.log(`audioBuffer length ${audioBuffer.length}`);
+    const layer = createLayer(context, speaker, audioBuffer, layers);
     layer.start();
     layers.push(layer);
     renderLayers(layers);

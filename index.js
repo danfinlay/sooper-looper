@@ -1,14 +1,12 @@
-import { initUi, renderLayers } from './ui.js';
-
-let passthrough = false;
-const layers = [];
-
-console.log('starting looper!');
+import { initUi } from './ui.js';
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
+console.log('starting looper!');
+
+const layers = [];
 const context = new AudioContext();
-let mic, mediaStream;
 const speaker = context.destination;
+let mediaStream;
 
 // Being lazy for now, requiring mic access on page load:
 navigator.mediaDevices.getUserMedia({
